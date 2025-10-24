@@ -19,7 +19,3 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-h1, h2, h3{
-    text-align: center;
-    color: #00FF00;
-}
