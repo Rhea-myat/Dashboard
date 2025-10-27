@@ -211,5 +211,5 @@ with tab_about:
 # ----------------------
 # Footer
 # ----------------------
-st.markdown('<div class="footer-note">© 2025 MBTI Career Quest · Built with ❤️ using Streamlit</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer-note">© 2025 MBTI Career Quest · Built with using Streamlit</div>', unsafe_allow_html=True)
 
