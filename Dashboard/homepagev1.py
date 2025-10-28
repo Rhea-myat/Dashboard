@@ -142,7 +142,7 @@ except Exception as e:
 st.markdown(
     """
     <div class="center-screen">
-        <h1 class="hero-title" style="font-family:'Orbitron', sans-serif;">MBTI QUEST</h1>
+        <h1 class="hero-title" style="font-family:'Orbitron', sans-serif;">MBTI CAREER QUEST</h1>
         <button class="btn-hero">Start Your Journey</button>
     </div>
     """,
