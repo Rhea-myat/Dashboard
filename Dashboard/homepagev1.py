@@ -126,7 +126,6 @@ try:
     with open(DEFAULT_BG_PATH, "rb") as f:
         default_bg_bytes = f.read()
 except Exception:
-    # No default file found; that's okay
     pass
 
 try:
