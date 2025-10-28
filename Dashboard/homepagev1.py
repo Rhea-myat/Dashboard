@@ -1,6 +1,7 @@
 import base64
 from io import BytesIO
 import textwrap
+from turtle import position
 import streamlit as st
 from streamlit_lottie import st_lottie
 import requests, random
@@ -71,6 +72,18 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     margin-bottom: 3rem; /* ⬅ Adjust spacing between title and button */
 }}
 
+    /* astronaut positioned relative to the title */
+    .hero-container .astro {{
+    position: absolute;
+    top: -80px;              /* move it above the title */
+    right: -220px;           /* move it slightly to the right */
+    width: 180px;
+    height: 180px;
+    animation: float 8s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(0,180,255,0.6));
+    pointer-events: none;
+    }}
+
     @keyframes glow {{
         from {{ text-shadow: 0 0 15px #00BFFF, 0 0 30px #E6F3FF, 0 0 45px #1E90FF }}
         to {{ text-shadow: 0 0 25px #E6F3FF, 0 0 50px #00BFFF, 0 0 70px #87CEFA }}
@@ -133,13 +146,31 @@ try:
 except Exception as e:
     st.write("bg error:", e)
 
-
+st.markdown("""
+<div style="
+    display: flex;
+    justify-content: flex-end;   /* moves content to the right horizontally */
+    align-items: flex-end;       /* moves content to the bottom vertically */
+    flex-direction: column;
+    margin-top: 50px;
+    margin-right: 50px;
+">
+</div>
+            
+""", unsafe_allow_html=True)
 # Hero Title in Center
 # ---------------------------
 st.markdown(
     """
     <div class="center-screen">
         <h1 class="hero-title" style="font-family:'Orbitron', sans-serif;">MBTI CAREER QUEST</h1>
+        <div class="astro">
+        <iframe
+        src="https://lottie.host/embed/d27b2045-0670-4c4f-afb6-2cd399ebbee3/QeiQKtPvLe.lottie"
+        style="width:100%;height:100%;border:none;background:transparent;"
+        allowfullscreen>
+        </iframe>
+        </div>
         <button class="btn-hero">Start Your Journey</button>
     </div>
     """,
@@ -162,14 +193,16 @@ st.markdown("""
 }
 
 /* position + size of the astronaut */
-.overlay .astro {
+.astro {
   position: absolute;
-  left: 62%;              /* move horizontally */
-  top: 18%;               /* move vertically */
-  width: min(22vw, 280px);
-  aspect-ratio: 1;
-  animation: bob 10s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(0,180,255,.55));
+  top: 23%;                      /* move down from the very top */
+  right: 12%;                   /* distance from the right edge */
+  width: 250px;                 /* astronaut size */
+  height: 250px;
+  z-index: 10;                  /* keep it above background */
+  animation: float 8s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(0,180,255,0.6));
+  pointer-events: none; 
 }
 
 /* gentle up-down motion */
@@ -189,19 +222,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<div style="
-    display: flex;
-    justify-content: center;
-    align-items: right;
-    flex-direction: column;
-    margin-top: -50px; /* move it slightly above title */
-    margin-bottom: -30px;
-">
-  <iframe
-    src="https://lottie.host/embed/d27b2045-0670-4c4f-afb6-2cd399ebbee3/QeiQKtPvLe.lottie"
-    style="width: 250px; height: 250px; border: none; background: transparent;"
-    allowfullscreen>
-  </iframe>
-</div>
-""", unsafe_allow_html=True)
+
+
+
