@@ -10,17 +10,13 @@ st.set_page_config(
     page_title="MBTI Career Quest",
     page_icon="",  # place holder for now
     layout="wide",
-)
-
-st.markdown(
-    """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
+    )
+# 1) Load Google Fonts via <link> (more reliable than @import)
+st.markdown("""
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+""", unsafe_allow_html=True)
 
 # ---------------------------
 # Helpers
@@ -58,22 +54,23 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
         background-attachment: fixed;
     }}
 
+    
+    /* Title */
     .hero-title {{
         font-family: 'Orbitron', sans-serif;
-        font-optical-sizing: auto;
         font-weight: 800;
-        font-style: normal;
         text-align: center;
-        color: #E6F3FF;  /* soft white-blue */
-        font-size: clamp(6rem, 12vw, 16rem);
+        color: #E6F3FF;
+        font-size: clamp(100px, 8vw, 120px);
         text-shadow:
             3px 3px 0 #007BFF,
             6px 6px 0 #00BFFF,
-            9px 9px 15px rgba(0, 191, 255, 0.6),
-            0 0 30px rgba(255, 255, 255, 0.9);
-        letter-spacing: 0.15em;
-        animation: glow 2s ease-in-out infinite alternate;
-    }}
+            9px 9px 15px rgba(0,191,255,0.6),
+            0 0 30px rgba(255,255,255,0.9);
+    letter-spacing: 0.1em;
+    animation: glow 2s ease-in-out infinite alternate;
+    margin-bottom: 3rem; /* ⬅ Adjust spacing between title and button */
+}}
 
     @keyframes glow {{
         from {{ text-shadow: 0 0 15px #00BFFF, 0 0 30px #E6F3FF, 0 0 45px #1E90FF }}
@@ -90,6 +87,34 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     </style>
     """
     st.markdown(css, unsafe_allow_html=True)
+
+# button styles
+st.markdown("""
+<style>
+/* Hero button (special for homepage) */
+.btn-hero {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.0rem;
+  color: #E6F3FF;
+  background: linear-gradient(90deg, #007BFF 0%, #00BFFF 100%);
+  border: none;
+  border-radius: 50px;
+  padding: 1.2rem 3rem;
+  margin-top: 2rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 0 20px #00BFFF, 0 0 40px #007BFF;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-hero:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px #00BFFF, 0 0 60px #007BFF;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
 # ---------------------------
@@ -117,7 +142,8 @@ except Exception as e:
 st.markdown(
     """
     <div class="center-screen">
-        <h1 class="hero-title">MBTI Quest</h1>
+        <h1 class="hero-title" style="font-family:'Orbitron', sans-serif;">MBTI QUEST</h1>
+        <button class="btn-hero">Start Your Journey</button>
     </div>
     """,
     unsafe_allow_html=True,
