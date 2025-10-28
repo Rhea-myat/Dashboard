@@ -57,9 +57,11 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     
     /* Title */
     .hero-title {{
+        position: relative;
         font-family: 'Orbitron', sans-serif;
         font-weight: 1000;
         text-align: center;
+        margin: 140 px auto 0; 
         color: #E6F3FF;
         font-size: clamp(100px, 8vw, 120px);
         text-shadow:
@@ -73,16 +75,17 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
 }}
 
     /* astronaut positioned relative to the title */
-    .hero-container .astro {{
-    position: absolute;
-    top: -80px;              /* move it above the title */
-    right: -220px;           /* move it slightly to the right */
-    width: 180px;
-    height: 180px;
-    animation: float 8s ease-in-out infinite;
-    filter: drop-shadow(0 0 12px rgba(0,180,255,0.6));
-    pointer-events: none;
-    }}
+    .astro {{
+        position: absolute;
+        top: 30px;                      /* move down from the very top */
+        right: 38px;                   /* distance from the right edge */
+        width: 250px;                 /* astronaut size */
+        height: 250px;
+        z-index: 10;                  /* keep it above background */
+        animation: float 8s ease-in-out infinite;
+        filter: drop-shadow(0 0 12px rgba(0,180,255,0.6));
+        pointer-events: none; 
+}}
 
     @keyframes glow {{
         from {{ text-shadow: 0 0 15px #00BFFF, 0 0 30px #E6F3FF, 0 0 45px #1E90FF }}
@@ -96,6 +99,20 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
         height: 100vh;
         flex-direction: column;
     }}
+
+
+
+    /* Small screens: stack under the title */
+    @media (max-width: 700px) {{
+    .hero {{ width: 92vw; margin-top: 12vh; }}
+    .hero .astro {{
+        position: static;
+        display: block;
+        margin: 16px auto 0;
+        width: 160px;
+  }}
+}}
+
     </style>
     """
     st.markdown(css, unsafe_allow_html=True)
@@ -176,51 +193,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
-st.markdown("""
-<style>
-/* make content area transparent over your star bg */
-.block-container, .stApp [data-testid="stVerticalBlock"] > div {
-  background: transparent !important;
-}
-
-/* full-screen overlay that won't block clicks */
-.overlay {
-  position: fixed;
-  inset: 0;               /* top:0; right:0; bottom:0; left:0 */
-  pointer-events: none;   /* let users click things underneath */
-  z-index: 20;
-}
-
-/* position + size of the astronaut */
-.astro {
-  position: absolute;
-  top: 23%;                      /* move down from the very top */
-  right: 12%;                   /* distance from the right edge */
-  width: 250px;                 /* astronaut size */
-  height: 250px;
-  z-index: 10;                  /* keep it above background */
-  animation: float 8s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(0,180,255,0.6));
-  pointer-events: none; 
-}
-
-/* gentle up-down motion */
-@keyframes bob {
-  0%   { transform: translateY(0px) }
-  50%  { transform: translateY(-22px) }
-  100% { transform: translateY(0px) }
-}
-
-/* make iframe itself transparent */
-.overlay .astro iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: transparent;
-}
-</style>
-""", unsafe_allow_html=True)
 
 
 
