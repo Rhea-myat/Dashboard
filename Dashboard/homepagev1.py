@@ -2,6 +2,9 @@ import base64
 from io import BytesIO
 import textwrap
 import streamlit as st
+from streamlit_lottie import st_lottie
+import requests, random
+import json
 
 # ---------------------------
 # Page Config
@@ -20,11 +23,7 @@ st.markdown("""
 
 # ---------------------------
 # Helpers
-# ---------------------------
-
-def _b64_image(file_bytes: bytes) -> str:
-    return base64.b64encode(file_bytes).decode()
-
+# --------------------------
 
 def set_background(image_bytes: bytes | None = None, image_url: str | None = None, blur_px: int = 0, dim: float = 0.0):
     # Build the image layer
@@ -116,7 +115,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
 # ---------------------------
 # Default background 
 # ---------------------------
@@ -147,3 +145,63 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+st.markdown("""
+<style>
+/* make content area transparent over your star bg */
+.block-container, .stApp [data-testid="stVerticalBlock"] > div {
+  background: transparent !important;
+}
+
+/* full-screen overlay that won't block clicks */
+.overlay {
+  position: fixed;
+  inset: 0;               /* top:0; right:0; bottom:0; left:0 */
+  pointer-events: none;   /* let users click things underneath */
+  z-index: 20;
+}
+
+/* position + size of the astronaut */
+.overlay .astro {
+  position: absolute;
+  left: 62%;              /* move horizontally */
+  top: 18%;               /* move vertically */
+  width: min(22vw, 280px);
+  aspect-ratio: 1;
+  animation: bob 10s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(0,180,255,.55));
+}
+
+/* gentle up-down motion */
+@keyframes bob {
+  0%   { transform: translateY(0px) }
+  50%  { transform: translateY(-22px) }
+  100% { transform: translateY(0px) }
+}
+
+/* make iframe itself transparent */
+.overlay .astro iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div style="
+    display: flex;
+    justify-content: center;
+    align-items: right;
+    flex-direction: column;
+    margin-top: -50px; /* move it slightly above title */
+    margin-bottom: -30px;
+">
+  <iframe
+    src="https://lottie.host/embed/d27b2045-0670-4c4f-afb6-2cd399ebbee3/QeiQKtPvLe.lottie"
+    style="width: 250px; height: 250px; border: none; background: transparent;"
+    allowfullscreen>
+  </iframe>
+</div>
+""", unsafe_allow_html=True)
