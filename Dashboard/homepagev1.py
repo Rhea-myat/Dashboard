@@ -58,7 +58,7 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     /* Title */
     .hero-title {{
         font-family: 'Orbitron', sans-serif;
-        font-weight: 800;
+        font-weight: 1000;
         text-align: center;
         color: #E6F3FF;
         font-size: clamp(100px, 8vw, 120px);
