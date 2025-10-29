@@ -184,8 +184,4 @@ st.markdown("""
     </div>
     <button class="btn-hero">Start Your Journey</button>
 </div>
-<<<<<<< HEAD
 """, unsafe_allow_html=True)
-=======
-""", unsafe_allow_html=True)
->>>>>>> 2672cab2242e0ac311a169d5c8e167d30885e8a0
