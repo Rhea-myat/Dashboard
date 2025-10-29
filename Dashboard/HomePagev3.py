@@ -77,7 +77,7 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     /* astronaut positioned relative to the title */
     .astro {{
         position: absolute;
-        top: 140px;                      /* move down from the very top */
+        top: 120px;                      /* move down from the very top */
         right: 20x;                   /* distance from the right edge */
         width: 250px;                 /* astronaut size */
         height: 250px;
