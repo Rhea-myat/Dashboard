@@ -116,6 +116,14 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     """
     st.markdown(css, unsafe_allow_html=True)
 
+def load_lottiefile(path):
+    with open(path, "r") as f:
+        return json.load(f)
+
+lottie_cat = load_lottiefile("Space Cat.json")
+
+
+
 # button styles
 st.markdown("""
 <style>
@@ -189,4 +197,3 @@ st.markdown("""
     <button class="btn-hero">Start Your Journey</button>
 </div>
 """, unsafe_allow_html=True)
-
