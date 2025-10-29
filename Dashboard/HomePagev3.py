@@ -77,8 +77,8 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     /* astronaut positioned relative to the title */
     .astro {{
         position: absolute;
-        top: 30px;                      /* move down from the very top */
-        right: 38px;                   /* distance from the right edge */
+        top: 140px;                      /* move down from the very top */
+        right: 20x;                   /* distance from the right edge */
         width: 250px;                 /* astronaut size */
         height: 250px;
         z-index: 10;                  /* keep it above background */
@@ -176,18 +176,17 @@ st.markdown("""
 """, unsafe_allow_html=True)
 # Hero Title in Center
 # ---------------------------
-st.markdown(
-    """
-    <div class="hero">
-        <h1 class="hero-title" style="font-family:'Orbitron', sans-serif;">MBTI CAREER QUEST</h1>
-        <div class="astro">
-            <iframe
-            src="https://lottie.host/embed/d27b2045-0670-4c4f-afb6-2cd399ebbee3/QeiQKtPvLe.lottie"
-            style="width:100%;height:100%;border:none;background:transparent;"
-            allowfullscreen>
-            </iframe>
-        </div>
-        <button class="btn-hero">Start Your Journey</button>
+st.markdown("""
+<div class="center-screen">
+    <h1 class="hero-title" style="font-family:'Orbitron', sans-serif;">MBTI CAREER QUEST</h1>
+    <div class="astro">
+        <iframe
+        src="https://lottie.host/embed/d27b2045-0670-4c4f-afb6-2cd399ebbee3/QeiQKtPvLe.lottie"
+        style="width:100%;height:100%;border:none;background:transparent;"
+        allowfullscreen>
+        </iframe>
     </div>
-    """,
-    unsafe_allow_html=True,
+    <button class="btn-hero">Start Your Journey</button>
+</div>
+""", unsafe_allow_html=True)
+
