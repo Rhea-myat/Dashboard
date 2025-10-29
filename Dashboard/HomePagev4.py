@@ -116,14 +116,6 @@ def set_background(image_bytes: bytes | None = None, image_url: str | None = Non
     """
     st.markdown(css, unsafe_allow_html=True)
 
-def load_lottiefile(path):
-    with open(path, "r") as f:
-        return json.load(f)
-
-lottie_cat = load_lottiefile("Space Cat.json")
-
-
-
 # button styles
 st.markdown("""
 <style>
@@ -149,6 +141,44 @@ st.markdown("""
   transform: scale(1.08);
   box-shadow: 0 0 30px #00BFFF, 0 0 60px #007BFF;
 }
+</style>
+""", unsafe_allow_html=True)
+
+# ---------- FLOATING LOTTIES (CSS) ----------
+st.markdown("""
+<style>
+/* Overlay layer that never blocks clicks on the app */
+.overlay { position: fixed; inset: 0; pointer-events: none; z-index: 30; }
+
+/* Generic float style you can reuse for cat/rocket/stars */
+.float {
+  position: absolute;
+  width: clamp(1600px, 16vw, 2600px);
+  height: clamp(1600px, 16vw, 2600px);
+  /* adjust position per element */
+}
+.float iframe{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none; background: transparent;
+  display: block; overflow: hidden;   /* <-- no scrollbars */
+}
+.glow { filter: drop-shadow(0 0 18px rgba(0,180,255,.45)); }
+
+/* Gentle floating motion */
+@keyframes float {
+  0%   { transform: translateY(0);   }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0);   }
+}
+
+/* Example positions */
+.cat  { right: 8vw;  bottom: 10vh; animation: float 7s ease-in-out infinite; }
+.rocket { right: 5vw;  top: 10vh;  animation: float 8s ease-in-out infinite; }
+.stars  { left:  4vw;  top: 12vh;  animation: float 9s ease-in-out infinite; }
+
+/* Keep on top of background but below the Streamlit top bar */
+header, [data-testid="stHeader"] { z-index: 40; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -193,7 +223,37 @@ st.markdown("""
         style="width:100%;height:100%;border:none;background:transparent;"
         allowfullscreen>
         </iframe>
+        <div class="overlay">
+        <div class="float cat glow">
+            <iframe
+            src="https://lottie.host/embed/3a469622-a7b7-4e93-9c61-a9eb41721e01/Nn5OCwm6ai.lottie"
+            style="width:150%;height:150%;border:none;background:transparent;"
+            allowfullscreen>
+            </iframe>
+        </div>
+        <div class="overlay">
+            <iframe
+            src="https://lottie.host/embed/abde8ba3-6551-4f3b-9097-c8032d113f0e/gaKDGGxoam.lottie" 
+            style="width:300%;height:300%;border:none;background:transparent;"
+            allowfullscreen>
+            </iframe>
+        </div>
+    </div>
     </div>
     <button class="btn-hero">Start Your Journey</button>
 </div>
 """, unsafe_allow_html=True)
+
+# ---------- FLOATING LOTTIES (HTML) ----------
+st.markdown("""
+
+""", unsafe_allow_html=True)
+
+def load_lottiefile(path: str):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)   # must be a dict
+
+
+
+
+
