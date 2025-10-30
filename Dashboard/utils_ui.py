@@ -1,6 +1,7 @@
 import streamlit as st 
 import base64
 from pathlib import Path
+from html import escape
 
 def load_theme():
     st.markdown("""
@@ -108,7 +109,64 @@ def load_theme():
     background: rgba(0,255,255,0.1) !important;
     box-shadow: 0 0 20px #00FFFF !important;
     }
+    /* === Space Panel / Text Box ============================== */
+    .ui-box{
+    --accent:#00BFFF;                 /* default cyan accent */
+    --bg:rgba(10,15,30,.55);
+    --border:rgba(0,191,255,.35);
+    --glow:0 0 18px rgba(0,191,255,.45);
+    width:100%;
+    border-radius:18px;
+    padding:1rem 1.25rem;
+    border:1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--bg);
+    backdrop-filter: blur(6px);
+    box-shadow: var(--glow);
+    position:relative;
+    overflow:hidden;
+    }
 
+    /* decorative corner notches */
+    .ui-box:before, .ui-box:after{
+    content:"";
+    position:absolute; inset:auto 18px 18px auto;
+    width:42px; height:10px; border:1px solid var(--border); border-top:none; border-left:none;
+    opacity:.6; border-radius:0 0 8px 0;
+    }
+    .ui-box:after{ inset:18px auto auto 18px; border-top:1px solid var(--border); border-right:none; border-bottom:none; border-radius:8px 0 0 0; height:10px; width:42px; }
+
+    /* header */
+    .ui-box .ui-box__title{
+    display:flex; align-items:center; gap:.6rem;
+    font-weight:900; letter-spacing:.06em;
+    margin:0 0 .35rem 0;
+    color:#E6F3FF;
+    text-shadow: 0 0 10px rgba(0,191,255,.45);
+    }
+    .ui-box .ui-box__icon{ filter: drop-shadow(0 0 10px rgba(0,191,255,.5)); }
+
+    /* content */
+    .ui-box .ui-box__content{ color:#E6F3FF; line-height:1.5; }
+
+    /* sizes */
+    .ui-box.sm{ max-width:520px; }
+    .ui-box.md{ max-width:820px; }
+    .ui-box.lg{ max-width:1180px; }
+
+    /* variants (just swap accent color) */
+    .ui-box.primary { --accent:#00BFFF; --border:rgba(0,191,255,.35); --glow:0 0 18px rgba(0,191,255,.45); }
+    .ui-box.purple  { --accent:#9F7AEA; --border:rgba(159,122,234,.35); --glow:0 0 18px rgba(159,122,234,.45); }
+    .ui-box.pink    { --accent:#FF6AD5; --border:rgba(255,106,213,.35); --glow:0 0 18px rgba(255,106,213,.45); }
+    .ui-box.green   { --accent:#34D399; --border:rgba(52,211,153,.35); --glow:0 0 18px rgba(52,211,153,.45); }
+
+    /* optional framed style like your sample image */
+    .ui-box.frame{
+    background: rgba(12,18,34,.6);
+    border:2px solid var(--border);
+    box-shadow: 0 0 0 2px rgba(255,255,255,.04) inset, var(--glow);
+    padding:1.2rem 1.4rem;
+    border-radius:22px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -218,3 +276,41 @@ def render_button(label: str, key: str = None, variant: str = "primary", positio
         else:
             clicked = st.button(label, key=key)
     return clicked
+
+def render_box(
+    body: str,
+    title: str | None = None,
+    icon: str | None = None,              # e.g., "🛰️" or "<img ...>"
+    variant: str = "primary",             # "primary" | "purple" | "pink" | "green"
+    size: str = "md",                     # "sm" | "md" | "lg"
+    align: str = "center",                # "left" | "center" | "right"
+    framed: bool = False,                 # adds thicker frame style
+    markdown: bool = True                 # treat body as Markdown
+):
+    # pick alignment column
+    if align == "left":
+        col = st.columns([1, 2, 3])[0]
+    elif align == "right":
+        col = st.columns([3, 2, 1])[2]
+    else:
+        col = st.columns([1, 2, 1])[1]
+
+    with col:
+        # assemble HTML
+        classes = f"ui-box {variant} {size}" + (" frame" if framed else "")
+        title_html = ""
+        if title:
+            if icon and not icon.strip().startswith("<"):
+                icon_html = f"<span class='ui-box__icon'>{escape(icon)}</span>"
+            else:
+                icon_html = (icon or "")
+            title_html = f"<div class='ui-box__title'>{icon_html}<span>{escape(title)}</span></div>"
+
+        if markdown:
+            # allow Streamlit markdown inside
+            st.markdown(f"<div class='{classes}'>{title_html}<div class='ui-box__content'>", unsafe_allow_html=True)
+            st.markdown(body)  # body can contain **markdown**, lists, etc.
+            st.markdown("</div></div>", unsafe_allow_html=True)
+        else:
+            # raw HTML body
+            st.markdown(f"<div class='{classes}'>{title_html}<div class='ui-box__content'>{body}</div></div>", unsafe_allow_html=True)
