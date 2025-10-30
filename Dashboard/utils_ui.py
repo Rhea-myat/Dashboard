@@ -109,6 +109,7 @@ def load_theme():
     background: rgba(0,255,255,0.1) !important;
     box-shadow: 0 0 20px #00FFFF !important;
     }
+    
     /* === Space Panel / Text Box ============================== */
     .ui-box{
     --accent:#00BFFF;                 /* default cyan accent */
