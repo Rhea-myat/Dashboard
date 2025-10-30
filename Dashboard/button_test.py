@@ -46,31 +46,44 @@ render_box(
     title="Filters",
     icon="",
     body="""
-- Choose **MBTI** type
+- Choose *MBTI* type
 - Select preferred **industry**
-- Toggle **experience level**
+- Toggle **experience level** 
 """,
     variant="primary",
     size="sm",
     align="left",
-    framed=True
+    framed=True,
+    markdown=False
 )
 
 # larger info panel
 render_box(
     title="Career Matches",
     icon="",
-    body="Top matches are generated using your MBTI + skills.\n Click a role to see required skills and learning path.",
+    body="<p>Top matches are generated using your MBTI + skills. Click a role to see required skills and learning path.</p>",
     variant="primary",
     size="lg",
-    align="center"
+    align="center", 
+    markdown=False
 )
 
 # raw HTML body example (markdown=False)
 render_box(
     title="Reminder",
     icon="",
-    body="<p>Save favorites and compare salaries across regions.\n What is more?\n\n Next Next Next Next Next Next Next Next Next Next Next Next Next </p>", 
+    body="<p>Save favorites and compare salaries across regions.\n What is more?\n\n Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next  </p>", 
+    variant="green",
+    size="lg",
+    align="left",
+    framed=True,
+    markdown=False
+)
+
+render_box(
+    title="Another",
+    icon="",
+    body="<p>Save favorites and compare salaries across regions.\n What is more?\n\n Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next  </p>", 
     variant="green",
     size="lg",
     align="center",
