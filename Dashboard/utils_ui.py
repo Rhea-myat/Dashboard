@@ -109,9 +109,9 @@ def load_theme():
     background: rgba(0,255,255,0.1) !important;
     box-shadow: 0 0 20px #00FFFF !important;
     }
-    
+
     /* === Space Panel / Text Box ============================== */
-    .ui-box{
+    .ui-box {
     --accent:#00BFFF;                 /* default cyan accent */
     --bg:rgba(10,15,30,.55);
     --border:rgba(0,191,255,.35);
@@ -147,7 +147,11 @@ def load_theme():
     .ui-box .ui-box__icon{ filter: drop-shadow(0 0 10px rgba(0,191,255,.5)); }
 
     /* content */
-    .ui-box .ui-box__content{ color:#E6F3FF; line-height:1.5; }
+    .ui-box .ui-box__content{ color:#E6F3FF; 
+    line-height:1.6;
+    font-stretch: condensed; 
+    letter-spacing: 0.08em;
+    font-weight: 400; }
 
     /* sizes */
     .ui-box.sm{ max-width:520px; }

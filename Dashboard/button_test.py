@@ -45,10 +45,10 @@ from utils_ui import render_box
 render_box(
     title="Filters",
     icon="",
-    body="""
-- Choose *MBTI* type
-- Select preferred **industry**
-- Toggle **experience level** 
+    body="""\n
+- Choose **MBTI** type\n
+- Select preferred **industry**\n
+- Toggle **experience level**\n 
 """,
     variant="primary",
     size="sm",
@@ -62,7 +62,7 @@ render_box(
     title="Career Matches",
     icon="",
     body="<p>Top matches are generated using your MBTI + skills. Click a role to see required skills and learning path.</p>",
-    variant="primary",
+    variant="purple",
     size="lg",
     align="center", 
     markdown=False
@@ -72,10 +72,10 @@ render_box(
 render_box(
     title="Reminder",
     icon="",
-    body="<p>Save favorites and compare salaries across regions.\n What is more?\n\n Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next  </p>", 
+    body="<p>Save favorites and compare salaries across regions.\n\n What is more?\n\n Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next  </p>", 
     variant="green",
     size="lg",
-    align="left",
+    align="right",
     framed=True,
     markdown=False
 )
@@ -83,7 +83,7 @@ render_box(
 render_box(
     title="Another",
     icon="",
-    body="<p>Save favorites and compare salaries across regions.\n What is more?\n\n Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next  </p>", 
+    body="<p>Save favorites and compare salaries across regions.\n\nWhat is more?\n\n Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next Next  </p>", 
     variant="green",
     size="lg",
     align="center",
