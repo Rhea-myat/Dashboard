@@ -366,14 +366,13 @@ def render_side_menu(logo_path="logov3.png"):
         unsafe_allow_html=True
     )
 
-    # when closed, hide the whole sidebar shell
     if not st.session_state["menu_open"]:
         st.markdown('<style>section[data-testid="stSidebar"]{display:none!important;}</style>', unsafe_allow_html=True)
         return
 
-    # when open, render your menu (remove st.image below if you don't want logo INSIDE the sidebar)
+    # menu 
     with st.sidebar:
-        st.image(logo_path, width=96)  # optional – comment out to keep only the floating logo
+        st.image(logo_path, width=96)  
         st.markdown("### MBTI Career Quest")
         st.page_link("pages/main.py", label="HOME")
         st.page_link("pages/homepagev1.py", label="ABOUT")
