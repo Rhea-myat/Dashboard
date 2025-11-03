@@ -2,6 +2,9 @@ import streamlit as st
 import base64
 from pathlib import Path
 from html import escape
+from streamlit_extras.switch_page_button import switch_page
+import uuid
+
 
 def load_theme():
     st.markdown("""
@@ -319,3 +322,84 @@ def render_box(
         else:
             # raw HTML body
             st.markdown(f"<div class='{classes}'>{title_html}<div class='ui-box__content'>{body}</div></div>", unsafe_allow_html=True)
+
+
+
+def _data_uri(path: str):
+    p = Path(path)
+    mime = "image/png" if p.suffix.lower()==".png" else "image/jpeg"
+    b64 = base64.b64encode(p.read_bytes()).decode()
+    return f"data:{mime};base64,{b64}"
+
+
+def render_side_menu(logo_path="logov3.png"):
+    # --- toggle via query param  ---
+    qp = st.query_params
+    if "toggle_menu" in qp:
+        st.session_state["menu_open"] = not st.session_state.get("menu_open", False)
+        st.query_params.clear()
+    if "menu_open" not in st.session_state:
+        st.session_state["menu_open"] = False
+
+    # --- fixed logo button (single element) ---
+    logo_uri = _data_uri(logo_path)  # ensures image always appears
+    st.markdown(
+        f"""
+        <a class="mcq-menu-logo" href="?toggle_menu=1"></a>
+        <style>
+          .mcq-menu-logo {{
+            position: fixed; top: 18px; left: 18px; z-index: 1000;
+            width: 64px; height: 64px; display:block; border-radius: 50%;
+            background: url("{logo_uri}") center/cover no-repeat;
+            border: 2px solid rgba(0,191,255,.35);
+            box-shadow: 0 0 18px rgba(0,191,255,.45);
+            transition: transform .25s ease, box-shadow .25s ease;
+          }}
+          .mcq-menu-logo:hover {{ transform: scale(1.06); box-shadow: 0 0 26px rgba(0,191,255,.85); }}
+
+          /* hide Streamlit's built-in nav + collapse button */
+          [data-testid="stSidebarNav"] {{ display:none !important; }}
+          [data-testid="stSidebarCollapseButton"] {{ display:none !important; }}
+          section[data-testid="stSidebar"] [title="Close sidebar"] {{ display:none !important; }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # when closed, hide the whole sidebar shell
+    if not st.session_state["menu_open"]:
+        st.markdown('<style>section[data-testid="stSidebar"]{display:none!important;}</style>', unsafe_allow_html=True)
+        return
+
+    # when open, render your menu (remove st.image below if you don't want logo INSIDE the sidebar)
+    with st.sidebar:
+        st.image(logo_path, width=96)  # optional – comment out to keep only the floating logo
+        st.markdown("### MBTI Career Quest")
+        st.page_link("pages/main.py", label="HOME")
+        st.page_link("pages/homepagev1.py", label="ABOUT")
+        st.page_link("pages/HomePagev4.py", label="EXPLORE")
+
+        st.markdown(
+            """
+            <style>
+            .close-btn
+            {
+                display: inline-block; 
+                padding: 4px 8px; 
+                border-radius: 8px; 
+                text-decoration: none; 
+                font-weight: 700;
+                font-size: 16px;
+                color: #9aa8bb;
+                transition: color .15s ease, background .15s ease
+            }
+            .close-btn:hover{
+                color: #cfe3ff;
+                background: rgba(207,227,255,.08);
+            }
+            </style>
+            """, unsafe_allow_html=True
+        )
+
+        if st.button("CLOSE", key="nav-close", help="Close Menu"):
+            st.session_state["menu_open"] = False

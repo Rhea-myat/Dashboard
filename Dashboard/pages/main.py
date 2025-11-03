@@ -7,7 +7,6 @@ from utils_ui import render_title
 
 
 
-
 # call function 
 load_theme()
 render_title("MBTI CAREER QUEST", variant="hero", align="center", glow=True)
@@ -96,6 +95,5 @@ render_box(
 
 from pathlib import Path
 from utils_ui import render_side_menu
-
 render_side_menu()
 
