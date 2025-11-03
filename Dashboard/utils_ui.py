@@ -369,6 +369,27 @@ def render_side_menu(logo_path="logov3.png"):
     if not st.session_state["menu_open"]:
         st.markdown('<style>section[data-testid="stSidebar"]{display:none!important;}</style>', unsafe_allow_html=True)
         return
+    
+
+    st.markdown("""
+    <style>
+    section[data-testid="stSidebar"] > div {
+        background: #000000 !important;   /* solid black */
+        border-right: 1px solid rgba(0,191,255,0.25); /* optional cyan border */
+    }
+    [data-testid="stSidebar"] a {
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    }
+
+    /* hover glow effect */
+    [data-testid="stSidebar"] a:hover {
+    color: #00BFFF !important;      /* neon blue hover */
+    text-shadow: 0 0 8px rgba(0,191,255,0.7);
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     # menu 
     with st.sidebar:
@@ -381,24 +402,24 @@ def render_side_menu(logo_path="logov3.png"):
         st.markdown(
             """
             <style>
-            .close-btn
-            {
-                display: inline-block; 
-                padding: 4px 8px; 
-                border-radius: 8px; 
-                text-decoration: none; 
-                font-weight: 700;
-                font-size: 16px;
-                color: #9aa8bb;
-                transition: color .15s ease, background .15s ease
+            .close-btn {
+            background-color:#000000 !important;
+            color: #FFFFFF;
+            border:1px solid rgba(255,255,255,.15) !important;
+            font-family:'Orbitron',ui-sans-serif !important;
+            font-weight:700 !important;
+            font-size:16px !important;
+            border-radius:10px !important;
+            transition:all .25s ease !important;
             }
-            .close-btn:hover{
-                color: #cfe3ff;
-                background: rgba(207,227,255,.08);
+            .close-btn:hover {
+            color:#00BFFF !important;
+            border-color:rgba(0,191,255,.4) !important;
+            box-shadow:0 0 12px rgba(0,191,255,.45) !important;
             }
             </style>
-            """, unsafe_allow_html=True
-        )
+            """, unsafe_allow_html=True)
+        
 
         if st.button("CLOSE", key="nav-close", help="Close Menu"):
             st.session_state["menu_open"] = False
