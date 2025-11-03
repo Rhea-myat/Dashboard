@@ -342,7 +342,7 @@ def render_side_menu(logo_path="logov3.png"):
         st.session_state["menu_open"] = False
 
     # --- fixed logo button (single element) ---
-    logo_uri = _data_uri(logo_path)  # ensures image always appears
+    logo_uri = _data_uri(logo_path) 
     st.markdown(
         f"""
         <a class="mcq-menu-logo" href="?toggle_menu=1"></a>
