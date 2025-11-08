@@ -53,16 +53,18 @@ render_box(
     title="Explore Your Personality Universe",
     icon="🛰️",
     body="""
-Digital Dynamics' interactive dashboard guides graduates throughout the preliminary stage of finding a relevant career, integrating the MBTI personality structure into being, along with an exciting space-themed experience. Users explore through immersive and relevant personality types, discovering:<br>
-- **Statistics:**
+Digital Dynamics' interactive dashboard guides graduates throughout the preliminary stage of finding a relevant career, integrating the MBTI personality structure into being, along with an exciting space-themed experience. Users explore through immersive and relevant personality types, discovering:
+
+**Statistics:**
 Users can interact with the bar chart, donut graph, and treemap, which display their personality distribution and job correlations. And, guests can compare their personality to others to see if there is a better-suited career for the way they are.
-- **Personalities:**
+
+**Personalities:**
 Discovering 16 variations of MBTI personalities, each with a captivating representation that matches one's character. Guests can browse resources to find out more regarding MBTI and take a personality test.
-- **Career Guidance:**
-Based on the MBTI type, the users who choose the dashboard can provide insights on plausible career paths based on the data, which takes into account. Users can also choose specific jobs, although it is not relevant to their personality
+
+**Career Guidance:**
+Based on the MBTI type, the users who choose the dashboard can provide insights on plausible career paths based on the data, which takes into account. Users can also choose specific jobs, although it is not relevant to their personality.
 
 Set out on your journey by knowing your personality for a better future!
-
     """,
     variant="purple",
     size="lg",
