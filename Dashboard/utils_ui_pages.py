@@ -40,10 +40,22 @@ def load_theme():
     }
     .title.glow { animation: glow 2s ease-in-out infinite alternate; }
 
-    .title-hero   { font-size: clamp(72px, 8vw, 120px);  margin-top: 120px;  margin-bottom: 2.5rem; }
-    .title-page   { font-size: clamp(36px, 5vw, 64px);   margin-top: 48px;   margin-bottom: 1.5rem; }
-    .title-section{ font-size: clamp(24px, 3.5vw, 36px); margin-top: 24px;   margin-bottom: 1rem; }
-
+    .title-hero   { 
+        font-size: clamp(100px, 12vw, 160px) !important;  
+        margin-top: 80px !important;  
+        margin-bottom: 3rem !important;
+        text-shadow: 3px 3px 0 var(--glow-a), 6px 6px 0 var(--glow-b), 9px 9px 15px rgba(0,191,255,.6), 0 0 30px rgba(255,255,255,.9) !important;
+    }
+    .title-page   { 
+        font-size: clamp(56px, 7vw, 96px) !important;   
+        margin-top: -60px !important;   
+        margin-bottom: 2rem !important; 
+    }
+    .title-section{ 
+        font-size: clamp(42px, 5.5vw, 64px) !important; 
+        margin-top: 48px !important;   
+        margin-bottom: -2rem !important; 
+    }
     .t-center { text-align: center; }
     .t-left   { text-align: left; }
     .t-right  { text-align: right; }
@@ -55,6 +67,7 @@ def load_theme():
         9px 9px 15px rgba(0,191,255,.6),
         0 0 30px rgba(255,255,255,.9);
     }
+
 
 
     /* === BASE BUTTON STYLE (for all Streamlit buttons) === */
@@ -370,37 +383,126 @@ def render_side_menu(logo_path="logov3.png"):
         st.markdown('<style>section[data-testid="stSidebar"]{display:none!important;}</style>', unsafe_allow_html=True)
         return
     
-    
+
+    st.markdown("""
+    <style>
+    section[data-testid="stSidebar"] > div {
+        background: #000000 !important;   /* solid black */
+        border-right: 1px solid rgba(0,191,255,0.25); /* optional cyan border */
+    }
+    [data-testid="stSidebar"] a {
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    }
+
+    /* hover glow effect */
+    [data-testid="stSidebar"] a:hover {
+    color: #00BFFF !important;      /* neon blue hover */
+    text-shadow: 0 0 8px rgba(0,191,255,0.7);
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     # menu 
     with st.sidebar:
         st.image(logo_path, width=96)  
         st.markdown("### MBTI Career Quest")
-        st.page_link("pages/main.py", label="HOME")
-        st.page_link("pages/homepagev1.py", label="ABOUT")
-        st.page_link("pages/HomePagev4.py", label="EXPLORE")
+        st.page_link("pages/About.py", label="ABOUT")
+        st.page_link("pages/explore.py", label="EXPLORE")
+        st.page_link("pages/More.py", label="FIND OUT MORE")
 
         st.markdown(
             """
             <style>
-            .close-btn
-            {
-                display: inline-block; 
-                padding: 4px 8px; 
-                border-radius: 8px; 
-                text-decoration: none; 
-                font-weight: 700;
-                font-size: 16px;
-                color: #9aa8bb;
-                transition: color .15s ease, background .15s ease
+            .close-btn {
+            background-color:#000000 !important;
+            color: #FFFFFF;
+            border:1px solid rgba(255,255,255,.15) !important;
+            font-family:'Orbitron',ui-sans-serif !important;
+            font-weight:700 !important;
+            font-size:16px !important;
+            border-radius:10px !important;
+            transition:all .25s ease !important;
             }
-            .close-btn:hover{
-                color: #cfe3ff;
-                background: rgba(207,227,255,.08);
+            .close-btn:hover {
+            color:#00BFFF !important;
+            border-color:rgba(0,191,255,.4) !important;
+            box-shadow:0 0 12px rgba(0,191,255,.45) !important;
             }
             </style>
-            """, unsafe_allow_html=True
-        )
+            """, unsafe_allow_html=True)
+        
 
         if st.button("CLOSE", key="nav-close", help="Close Menu"):
             st.session_state["menu_open"] = False
+
+
+def inject_anim_css(): 
+    if st.session_state.get("_anim_css_injected"): 
+        return 
+    st.session_state["_anim_css_injected"]=True
+    st.markdown(
+        """
+        <style>
+        /* non-blocking overaly for lotties*/
+        .mcq-overlay {position: fixed; inset: 0; pointer-events:none; z-index: 30; }
+        .mcq-float {position: absolute; }
+        .mcq-float iframe { width:100%;  height:100%; border:none; background:transparent; display:block; }
+        .mcq-glow { filter: drop-shadow(0 0 18px rgba(0,180,255,.45));}
+
+        /* float animation -duration is set per element via inline style  */
+        @keyframe mcqFloat{
+            0% {transform: translateY(0)}
+            50% {transorm: translateY(-10px)}
+            100% {transform: translateY(0)}
+        }
+         /* responsive tweaks per role */
+        @media (max-width: 700px){
+        .mcq-role-astronaut { width:160px !important; height:160px !important; right: 12px !important; top: 80px !important; }
+        .mcq-role-cat       { width:140px !important; height:140px !important; right: 6vw  !important; bottom: 6vh !important; }
+        .mcq-role-stars     { width:160px !important; height:160px !important; left:  4vw  !important; top:    8vh !important; }
+      }
+        </style>
+        """, unsafe_allow_html=True
+    )
+    # role presets: position, size, glow, float speed
+_PRESETS = {
+    "astronaut": dict(right="20px", top="120px", width="260px", height="260px", glow=True, seconds=8),
+    "cat":       dict(right="6vw",  bottom="8vh", width="220px", height="220px", glow=True, seconds=7),
+    "stars":     dict(left="4vw",   top="10vh",   width="260px", height="260px", glow=True, seconds=9),
+}
+
+
+def render_anim(role: str, url:str, **overrides): 
+    """
+    render a lottie iframe with role-specific CSS presets
+    role: 'astronut', 'cat', 'stars' 
+    url: lottie.lottie/.json embed url 
+    overrides: left/right/top/bottom/width/height/seconds/glow  --> str|int|bool
+    """
+    inject_anim_css()
+    cfg = {**_PRESETS.get(role, {}), **overrides}
+
+    # style pieces 
+    pos = []
+    for k in ("left","right","top","bottom"):
+        v = cfg.get(k)
+        if v is not None:
+            pos.append(f"{k}:{v}")
+    w = cfg.get("width", "220px")
+    h = cfg.get("height","220px")
+    secs = cfg.get("seconds", 8)
+    glow = " mcq-glow" if cfg.get("glow", True) else ""
+
+    st.markdown(f"""
+    <div class="mcq-overlay">
+      <div class="mcq-float mcq-role-{role}{glow}"
+           style="{' ; '.join(pos)}; width:{w}; height:{h}; animation: mcqFloat {secs}s ease-in-out infinite;">
+        <iframe src="{url}" allowfullscreen>
+
+        </iframe>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+

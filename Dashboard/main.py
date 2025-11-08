@@ -1,9 +1,9 @@
 import streamlit as st
 
 # theme testing
-from utils_ui import load_theme
+from utils_ui_pages import load_theme
 st.set_page_config(page_title="Font Test", layout="wide")
-from utils_ui import render_title
+from utils_ui_pages import render_title
 
 
 
@@ -23,11 +23,11 @@ st.markdown("<h1 style='font-family: Orbitron; color: cyan;'>Testing Orbitron Fo
 st.write("Hopefully it works!")
 
 # test background 
-from utils_ui import inject_css_bg
+from utils_ui_pages import inject_css_bg
 inject_css_bg("background.png")
 
 # button testing 
-from utils_ui import render_button
+from utils_ui_pages import render_button
 if render_button("Start your Journey"): 
     st.success("Journey Started!")
 
@@ -43,7 +43,7 @@ with col3:
 st.markdown('<button class="btn-hero">Start Your Journey</button>', unsafe_allow_html=True)
 
 # simple box (markdown body)
-from utils_ui import render_box
+from utils_ui_pages import render_box
 render_box(
     title="Filters",
     icon="",
@@ -94,6 +94,6 @@ render_box(
 )
 
 from pathlib import Path
-from utils_ui import render_side_menu
+from utils_ui_pages import render_side_menu
 render_side_menu()
 
