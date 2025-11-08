@@ -53,15 +53,16 @@ render_box(
     title="Explore Your Personality Universe",
     icon="🛰️",
     body="""
-Our **interactive dashboard** brings the MBTI personality framework to life through an immersive space-themed experience. Navigate through the cosmos of personality types and discover:
+Digital Dynamics' interactive dashboard guides graduates throughout the preliminary stage of finding a relevant career, integrating the MBTI personality structure into being, along with an exciting space-themed experience. Users explore through immersive and relevant personality types, discovering:
+- **Statistics:**
+Users can interact with the bar chart, donut graph, and treemap, which display their personality distribution and job correlations. And, guests can compare their personality to others to see if there is a better-suited career for the way they are.
+- **Personalities:**
+Discovering 16 variations of MBTI personalities, each with a captivating representation that matches one's character. Guests can browse resources to find out more regarding MBTI and take a personality test.
+- **Career Guidance:**
+Based on the MBTI type, the users who choose the dashboard can provide insights on plausible career paths based on the data, which takes into account. Users can also choose specific jobs, although it is not relevant to their personality
 
-- **Visual Analytics**: Interactive charts and graphs displaying personality distribution and correlations
-- **Type Explorer**: Deep dive into each of the 16 MBTI personality types with detailed descriptions
-- **Personal Insights**: Compare your personality type with others and understand compatibility
-- **Career Guidance**: Discover career paths aligned with different MBTI types
-- **Team Dynamics**: Analyze how different personality types work together
+Set out on your journey by knowing your personality for a better future!
 
-Embark on this journey of self-discovery and unlock the potential within your unique personality constellation.
     """,
     variant="purple",
     size="lg",
