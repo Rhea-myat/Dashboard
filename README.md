@@ -4,6 +4,12 @@ An interactive Streamlit dashboard designed for high school students choosing a 
 
 The dashboard helps users understand MBTI personality types and explore how they relate to career fields, job titles, and reported job satisfaction. Its interactive visualizations provide ideas about possible study and career directions based on personality-related data.
 
+## Live Demo
+
+[Launch MBTI Career Quest](https://rhea-myat-mbti-career-quest.streamlit.app/)
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://rhea-myat-mbti-career-quest.streamlit.app/)
+
 
 ## Project Overview
 
