@@ -3,6 +3,7 @@ import base64
 from pathlib import Path
 from html import escape
 import uuid
+import re
 
 
 APP_DIR = Path(__file__).resolve().parent
@@ -43,7 +44,10 @@ def load_theme():
     font-weight: 1000;
     color: var(--title-color);
     letter-spacing: .08em;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
     }
     .title.glow { animation: glow 2s ease-in-out infinite alternate; }
 
@@ -54,14 +58,22 @@ def load_theme():
         text-shadow: 3px 3px 0 var(--glow-a), 6px 6px 0 var(--glow-b), 9px 9px 15px rgba(0,191,255,.6), 0 0 30px rgba(255,255,255,.9) !important;
     }
     .title-page   { 
-        font-size: clamp(56px, 7vw, 96px) !important;   
-        margin-top: -60px !important;   
-        margin-bottom: 2rem !important; 
+        font-size: clamp(2.5rem, 6vw, 4.75rem) !important;
+        margin-top: 2rem !important;
+        margin-bottom: 2.5rem !important;
     }
     .title-section{ 
-        font-size: clamp(42px, 5.5vw, 64px) !important; 
-        margin-top: 48px !important;   
-        margin-bottom: -2rem !important; 
+        font-size: clamp(1.5rem, 3.5vw, 2.65rem) !important;
+        margin-top: 3.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .title-description{
+        font-size: clamp(0.95rem, 1.6vw, 1.2rem) !important;
+        margin-top: 0.5rem !important;
+        margin-bottom: 2.5rem !important;
+        font-weight: 400 !important;
+        line-height: 1.6;
+        opacity: 0.9;
     }
     .t-center { text-align: center; }
     .t-left   { text-align: left; }
@@ -136,18 +148,19 @@ def load_theme():
     /* === Space Panel / Text Box ============================== */
     .ui-box {
     --accent:#00BFFF;                 /* default cyan accent */
-    --bg:rgba(10,15,30,.55);
+    --bg:rgba(7,12,25,.88);
     --border:rgba(0,191,255,.35);
     --glow:0 0 18px rgba(0,191,255,.45);
     width:100%;
     border-radius:18px;
-    padding:1rem 1.25rem;
+    padding:2rem 2.5rem;
     border:1px solid var(--border);
     background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--bg);
     backdrop-filter: blur(6px);
     box-shadow: var(--glow);
     position:relative;
     overflow:hidden;
+    margin:0 auto 2rem;
     }
 
     /* decorative corner notches */
@@ -165,16 +178,30 @@ def load_theme():
     font-weight:900; letter-spacing:.06em;
     margin:0 0 .35rem 0;
     color:#E6F3FF;
+    font-size:clamp(1.1rem, 2vw, 1.4rem);
     text-shadow: 0 0 10px rgba(0,191,255,.45);
     }
     .ui-box .ui-box__icon{ filter: drop-shadow(0 0 10px rgba(0,191,255,.5)); }
 
     /* content */
-    .ui-box .ui-box__content{ color:#E6F3FF; 
-    line-height:1.6;
+    .ui-box .ui-box__content{ color:#E6F3FF !important;
+    line-height:1.7;
     font-stretch: condensed; 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.02em;
     font-weight: 400; }
+
+    .ui-box .ui-box__content p,
+    .ui-box .ui-box__content ul,
+    .ui-box .ui-box__content ol {
+    color:#E6F3FF !important;
+    font-size:clamp(0.95rem, 1.25vw, 1.05rem) !important;
+    line-height:1.7 !important;
+    }
+    .ui-box .ui-box__content p { margin:1rem 0 !important; }
+    .ui-box .ui-box__content ul,
+    .ui-box .ui-box__content ol { margin:1rem 0 !important; padding-left:2rem !important; }
+    .ui-box .ui-box__content li { margin:.5rem 0 !important; color:#E6F3FF !important; }
+    .ui-box .ui-box__content strong { font-size:inherit !important; color:#E6F3FF !important; }
 
     /* sizes */
     .ui-box.sm{ max-width:520px; }
@@ -189,17 +216,26 @@ def load_theme():
 
     /* optional framed style like your sample image */
     .ui-box.frame{
-    background: rgba(12,18,34,.6);
+    background: rgba(7,12,25,.9);
     border:2px solid var(--border);
     box-shadow: 0 0 0 2px rgba(255,255,255,.04) inset, var(--glow);
-    padding:1.2rem 1.4rem;
+    padding:2rem 2.5rem;
     border-radius:22px;
+    }
+
+    @media (max-width: 768px) {
+        .title-page { margin-top:1.25rem !important; margin-bottom:2rem !important; }
+        .title-section { margin-top:2.5rem !important; margin-bottom:.75rem !important; }
+        .title-description { margin-bottom:2rem !important; }
+        .ui-box, .ui-box.frame { padding:1.25rem !important; }
+        .ui-box .ui-box__content ul,
+        .ui-box .ui-box__content ol { padding-left:1.3rem !important; }
     }
     </style>
     """, unsafe_allow_html=True)
 
 def render_title(text, variant="page", align="center", glow=True, size=None):
-    vmap = {"hero":"title-hero", "page":"title-page", "section":"title-section"}
+    vmap = {"hero":"title-hero", "page":"title-page", "section":"title-section", "description":"title-description"}
     amap = {"left":"t-left", "center":"t-center", "right":"t-right"}
     style = f"style='font-size:{size}px;'" if size else ""
     classes = f"title {vmap.get(variant,'title-page')} {amap.get(align,'t-center')}{' glow' if glow else ''}"
@@ -305,6 +341,40 @@ def render_button(label: str, key: str = None, variant: str = "primary", positio
             clicked = st.button(label, key=key)
     return clicked
 
+def _simple_markdown_to_html(text: str) -> str:
+    """Convert panel paragraphs, lists, and bold text without extra packages."""
+    blocks, paragraph, list_items = [], [], []
+
+    def inline(value: str) -> str:
+        safe = escape(value.strip())
+        return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", safe)
+
+    def flush_paragraph():
+        if paragraph:
+            blocks.append(f"<p>{inline(' '.join(paragraph))}</p>")
+            paragraph.clear()
+
+    def flush_list():
+        if list_items:
+            blocks.append("<ul>" + "".join(f"<li>{inline(item)}</li>" for item in list_items) + "</ul>")
+            list_items.clear()
+
+    for raw_line in text.strip().splitlines():
+        line = raw_line.strip()
+        if line.startswith("- "):
+            flush_paragraph()
+            list_items.append(line[2:])
+        elif not line:
+            flush_paragraph()
+            flush_list()
+        else:
+            flush_list()
+            paragraph.append(line)
+    flush_paragraph()
+    flush_list()
+    return "".join(blocks)
+
+
 def render_box(
     body: str,
     title: str | None = None,
@@ -321,7 +391,7 @@ def render_box(
     elif align == "right":
         col = st.columns([3, 2, 1])[2]
     else:
-        col = st.columns([1, 2, 1])[1]
+        col = st.columns([1, 8, 1])[1]
 
     with col:
         # assemble HTML
@@ -334,14 +404,11 @@ def render_box(
                 icon_html = (icon or "")
             title_html = f"<div class='ui-box__title'>{icon_html}<span>{escape(title)}</span></div>"
 
-        if markdown:
-            # allow Streamlit markdown inside
-            st.markdown(f"<div class='{classes}'>{title_html}<div class='ui-box__content'>", unsafe_allow_html=True)
-            st.markdown(body)  # body can contain **markdown**, lists, etc.
-            st.markdown("</div></div>", unsafe_allow_html=True)
-        else:
-            # raw HTML body
-            st.markdown(f"<div class='{classes}'>{title_html}<div class='ui-box__content'>{body}</div></div>", unsafe_allow_html=True)
+        body_html = _simple_markdown_to_html(body) if markdown else body
+        st.markdown(
+            f"<div class='{classes}'>{title_html}<div class='ui-box__content'>{body_html}</div></div>",
+            unsafe_allow_html=True,
+        )
 
 
 

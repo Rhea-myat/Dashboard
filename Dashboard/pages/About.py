@@ -40,7 +40,7 @@ The **Myers-Briggs Type Indicator** is a test that can help people identify thei
 - **Extraversion (E) or Introversion (I)** – Where someone focuses their energy. 
 - **Sensing (S) or INtuition (N)** – How someone takes in information.  
 - **Thinking (T) or Feeling (F)** – How someone makes decisions. 
-- **Judging (J) or Perceiving (P)**	How someone deals with the world. 
+- **Judging (J) or Perceiving (P)** – How someone deals with the world.
     """,
     variant="primary",
     size="lg",
