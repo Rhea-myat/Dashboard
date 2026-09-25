@@ -480,7 +480,7 @@ def render_side_menu(logo_path="assets/logov3.png"):
 
     # menu 
     with st.sidebar:
-        st.image(logo_path, width=96)  
+        st.image(str(_app_path(logo_path)), width=96)
         st.markdown("### MBTI Career Quest")
         st.page_link("pages/About.py", label="ABOUT")
         st.page_link("pages/explore.py", label="EXPLORE")
