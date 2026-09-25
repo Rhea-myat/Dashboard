@@ -2,7 +2,6 @@ import streamlit as st
 import base64
 from pathlib import Path
 from html import escape
-from streamlit_extras.switch_page_button import switch_page
 import uuid
 
 
