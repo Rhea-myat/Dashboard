@@ -1,20 +1,24 @@
 import streamlit as st 
 from utils_ui_pages import load_theme, inject_css_bg, render_title, render_anim, render_button, render_side_menu
 import random
+from pathlib import Path
+
+
+APP_DIR = Path(__file__).resolve().parent
 
 
 # page config
 st.set_page_config(
     page_title="MBTI Career Quest", 
-    page_icon="logov3.png",
+    page_icon=str(APP_DIR / "assets" / "logov3.png"),
     layout="wide",
 )
 
 # theme + background 
 load_theme()
-inject_css_bg("background.png")
+inject_css_bg("assets/background.png")
 
-render_side_menu()
+render_side_menu("assets/logov3.png")
 #astronut on top of title
 render_anim("astronut", 
             "https://lottie.host/embed/d27b2045-0670-4c4f-afb6-2cd399ebbee3/QeiQKtPvLe.lottie", 
@@ -102,7 +106,6 @@ top  = random.randint(20, 70)  # 20vh–70vh vertically
 render_anim("cat",
             "https://lottie.host/embed/3a469622-a7b7-4e93-9c61-a9eb41721e01/Nn5OCwm6ai.lottie",
             width="1500px", height="1500px", bottom="1vh", right="5vh", seconds=random.randint(6,10),rotate = random.randint(-15, 15))
-
 
 
 

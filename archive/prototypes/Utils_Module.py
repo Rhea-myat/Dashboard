@@ -5,6 +5,14 @@ from html import escape
 import uuid
 
 
+APP_DIR = Path(__file__).resolve().parent
+
+
+def _app_path(path: str | Path) -> Path:
+    path = Path(path)
+    return path if path.is_absolute() else APP_DIR / path
+
+
 def load_theme():
     st.markdown("""
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -240,7 +248,7 @@ def inject_css_bg(img_path_or_url: str):
         bg_url = img_path_or_url
     else:
         # read local file and embed as base64 data URI
-        p = Path(img_path_or_url)
+        p = _app_path(img_path_or_url)
         if not p.exists():
             st.warning(f"Background image not found: {p.resolve()}")
             return
@@ -357,13 +365,13 @@ def render_box(
 
 
 def _data_uri(path: str):
-    p = Path(path)
+    p = _app_path(path)
     mime = "image/png" if p.suffix.lower() == ".png" else "image/jpeg"
     b64 = base64.b64encode(p.read_bytes()).decode()
     return f"data:{mime};base64,{b64}"
 
 
-def render_side_menu(logo_path="logov3.png"):
+def render_side_menu(logo_path="assets/logov3.png"):
     # --- toggle via query param  ---
     qp = st.query_params
     if "toggle_menu" in qp:

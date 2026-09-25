@@ -70,9 +70,6 @@ Provides additional resources related to MBTI, personality frameworks, career de
 - Pandas
 - NumPy
 - Plotly
-- Altair
-- Pillow
-- Streamlit Lottie
 - HTML
 - CSS
 
@@ -80,21 +77,30 @@ Provides additional resources related to MBTI, personality frameworks, career de
 
 ```text
 Dashboard/
+├── .gitignore
 ├── requirements.txt
 ├── README.md
-└── Dashboard/
+├── Dashboard/
     ├── home_pagev5.py
-    ├── cleaned_kpmi_data.csv
-    ├── Utils_Module.py
-    ├── utils_ui.py
     ├── utils_ui_pages.py
-    ├── background.png
-    ├── logov3.png
     ├── pages/
     │   ├── About.py
     │   ├── explore.py
     │   └── More.py
-    └── character and animation assets
+    ├── assets/
+    │   ├── background.png
+    │   ├── logov3.png
+    │   ├── Group Photo.png
+    │   └── characters/
+    └── data/
+        └── cleaned_kpmi_data.csv
+├── notebooks/
+│   └── exploratory and preprocessing notebooks
+└── archive/
+    ├── prototypes/
+    ├── research/
+    ├── assets/
+    └── data/
 ```
 
 The primary Streamlit entry point is:
@@ -103,7 +109,7 @@ The primary Streamlit entry point is:
 Dashboard/home_pagev5.py
 ```
 
-Some additional Python files and notebooks document earlier prototypes, interface experiments, data preparation, and exploratory analysis.
+Earlier prototypes and research files are retained in `archive/`, while data-preparation and exploratory notebooks are stored in `notebooks/`. These files are not required to run the main application.
 
 ## Running the Project Locally
 

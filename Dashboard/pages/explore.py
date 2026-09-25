@@ -2,10 +2,13 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import numpy as np
+from pathlib import Path
 from utils_ui_pages import load_theme, inject_css_bg, render_title, render_side_menu
 
+APP_DIR = Path(__file__).resolve().parent.parent
+
 st.set_page_config(page_title="Explore", layout="wide")
-render_side_menu("logov3.png")
+render_side_menu("assets/logov3.png")
 
 st.markdown("""
 <style>
@@ -206,7 +209,7 @@ div[data-baseweb="slider"] {
 """, unsafe_allow_html=True)
 
 @st.cache_data
-def load_df(path="cleaned_kpmi_data.csv"):
+def load_df(path=APP_DIR / "data" / "cleaned_kpmi_data.csv"):
     d = pd.read_csv(path)
     d.columns = d.columns.str.lower().str.strip()
     return d.rename(columns={
@@ -256,7 +259,7 @@ def mbti_pie(df):
             legend_font=dict(color="#d4e7ff"),
             margin=dict(l=30, r=110, t=60, b=40),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
 
 
@@ -319,10 +322,10 @@ def jobfield_treemap(df):
 
     # --- Display chart after selection ---
     if sel == "All Jobfields":
-        st.plotly_chart(build_fig(agg, "All Jobfields Treemap and Satisfaction"), use_container_width=True)
+        st.plotly_chart(build_fig(agg, "All Jobfields Treemap and Satisfaction"), width="stretch")
     else:
         filtered = agg[agg["job_field"] == sel]
-        st.plotly_chart(build_fig(filtered, f"{sel} Treemap and Satisfaction"), use_container_width=True)
+        st.plotly_chart(build_fig(filtered, f"{sel} Treemap and Satisfaction"), width="stretch")
         
 # ---------- BAR: Job Satisfaction by MBTI ----------
 def job_satisfaction_section(df):
@@ -378,7 +381,7 @@ def job_satisfaction_section(df):
     fig.update_yaxes(showgrid=True, gridcolor="rgba(255,255,255,0.1)")
 
     # Display
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 # ---------- BAR + TREEMAP: Job Title vs MBTI ----------
 def job_title_vs_mbti(df):
@@ -393,11 +396,11 @@ def job_title_vs_mbti(df):
         fig = px.bar(grp, x="job_title", y="count", color="mbti",
                      barmode="group", title=f"MBTI across Top {top_n} Job Titles")
         fig.update_layout(xaxis_title="", yaxis_title="Count")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
     with col2:
         tree = px.treemap(grp, path=["job_title","mbti"], values="count",
                           title=f"Job Title vs MBTI (Treemap) — Top {top_n}")
-        st.plotly_chart(tree, use_container_width=True)
+        st.plotly_chart(tree, width="stretch")
 
 def _coerce_satisfaction(series):
     """Make job_satisfaction numeric in [0,1] where possible."""
@@ -506,10 +509,10 @@ def jobtitle_mbti_satisfaction_bars(df, key_prefix="jt_bar"):
     )
 
     # Display in Streamlit
-    st.plotly_chart(fig, use_container_width=True, theme=None)
+    st.plotly_chart(fig, width="stretch", theme=None)
 
 load_theme()
-inject_css_bg("background.png")
+inject_css_bg("assets/background.png")
 
 
 render_title("Explore", variant="title")

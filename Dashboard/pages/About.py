@@ -1,7 +1,13 @@
 import streamlit as st
 from pathlib import Path
-from Utils_Module import load_theme, inject_css_bg, render_title, render_box, render_button
-from utils_ui_pages import render_side_menu
+from utils_ui_pages import (
+    inject_css_bg,
+    load_theme,
+    render_box,
+    render_button,
+    render_side_menu,
+    render_title,
+)
 
 
 # Page configuration - MUST be first
@@ -10,10 +16,10 @@ st.set_page_config(page_title="About Us - Space Dashboard", layout="wide")
 # Load the space theme
 load_theme()
 
-render_side_menu("logov3.png")
+render_side_menu("assets/logov3.png")
 
 # Add space background image using local file
-inject_css_bg("background.png")
+inject_css_bg("assets/background.png")
 
 # Display logo with sidebar menu
 # render_side_menu()

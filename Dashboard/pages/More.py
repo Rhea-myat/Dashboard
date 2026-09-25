@@ -1,15 +1,18 @@
 import streamlit as st
-from Utils_Module import load_theme, inject_css_bg, render_title, render_box
 import base64
 from pathlib import Path
-from utils_ui_pages import render_side_menu
+from utils_ui_pages import inject_css_bg, load_theme, render_box, render_side_menu, render_title
+
+
+APP_DIR = Path(__file__).resolve().parent.parent
+CHARACTER_DIR = APP_DIR / "assets" / "characters"
 
 # Page configuration
 st.set_page_config(page_title="More - Space Dashboard", layout="wide")
 
 load_theme()
-inject_css_bg("background.png")
-render_side_menu("logov3.png")
+inject_css_bg("assets/background.png")
+render_side_menu("assets/logov3.png")
 
 render_title("FIND OUT MORE", variant="page", align="center", glow=True)
 render_title("✨ FIND YOUR FICTIONAL TWIN ✨", variant="section", align="center", glow=True)
@@ -211,7 +214,7 @@ for row in range(4):
         with col:
             # Load image
             try:
-                img_path = Path(img_file)
+                img_path = CHARACTER_DIR / img_file
                 if img_path.exists():
                     with open(img_path, "rb") as f:
                         img_data = base64.b64encode(f.read()).decode()
@@ -244,7 +247,7 @@ if st.session_state.show_modal and st.session_state.selected_char:
     def show_character_modal():
         # Load image
         try:
-            img_path = Path(char_detail['file'])
+            img_path = CHARACTER_DIR / char_detail['file']
             if img_path.exists():
                 st.image(str(img_path), width=200)
         except:
@@ -264,7 +267,7 @@ if st.session_state.show_modal and st.session_state.selected_char:
         st.markdown("#### Character Description")
         st.write(char_detail['description'])
 
-        if st.button("Close", use_container_width=True):
+        if st.button("Close", width="stretch"):
             st.session_state.show_modal = False
             st.session_state.selected_char = None
             st.rerun()
@@ -439,7 +442,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    st.image("Group Photo.png", use_container_width=True)
+    st.image(str(APP_DIR / "assets" / "Group Photo.png"), width="stretch")
 
 st.markdown("<br><br><br>", unsafe_allow_html=True)
 
